@@ -1,0 +1,71 @@
+:root {
+    --bank-navy: #002147;
+    --bank-red: #ed1c24;
+    --bank-blue: #0056b3;
+    --bg-light: #f4f7f9;
+    --text-dark: #1e293b;
+    --text-gray: #64748b;
+    --white: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
+
+.hidden { display: none !important; }
+
+/* --- LANDING PAGE --- */
+.top-utility { background: #001529; padding: 8px 10%; display: flex; justify-content: space-between; font-size: 0.65rem; color: #94a3b8; }
+.utility-links a { color: inherit; text-decoration: none; margin-right: 15px; font-weight: 600; }
+
+.main-header { background: var(--white); padding: 20px 10%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; }
+.logo { font-size: 1.8rem; font-weight: 900; color: var(--bank-navy); }
+.logo span { color: var(--bank-red); }
+.main-nav a { margin: 0 20px; text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+.main-nav a:hover { color: var(--bank-blue); }
+
+.hero-bank { background: linear-gradient(135deg, #002147 0%, #003366 100%); padding: 100px 10%; color: white; min-height: 500px; display: flex; align-items: center; }
+.hero-content h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+.hero-content h1 span { color: #fecaca; }
+.hero-content p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; line-height: 1.6; }
+
+.btn-bank { background: var(--bank-red); color: white; border: none; padding: 10px 25px; border-radius: 4px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+.btn-bank:hover { background: #c41212; transform: translateY(-2px); }
+.btn-outline { background: none; border: 2px solid white; }
+.btn-large { padding: 15px 40px; font-size: 1.1rem; }
+
+/* --- DASHBOARD --- */
+#dashboard-view { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+.portal-sidebar { background: var(--bank-navy); color: white; padding: 30px 0; display: flex; flex-direction: column; }
+.logo-box { padding: 0 25px 40px; font-size: 1.5rem; font-weight: 800; }
+.nav-item { padding: 15px 25px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 12px; font-weight: 600; color: #cbd5e1; }
+.nav-item i { width: 20px; text-align: center; }
+.nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: white; border-left: 4px solid var(--bank-red); }
+.signout-btn { margin: auto 20px 20px; }
+
+.portal-header { background: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; }
+.balance-strip { background: var(--bank-navy); color: white; padding: 8px 20px; border-radius: 4px; font-weight: 800; }
+
+.portal-main { padding: 40px; max-width: 1200px; }
+.portal-card { background: white; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 25px; }
+.summary-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+.mini-cards { display: flex; flex-direction: column; gap: 20px; }
+.inflow { border-left: 5px solid #10b981; }
+.outflow { border-left: 5px solid var(--bank-red); }
+
+/* --- TABLES --- */
+.table-container { background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { background: #f8fafc; padding: 15px; text-align: left; font-size: 0.75rem; color: var(--text-gray); border-bottom: 1px solid #e2e8f0; }
+.data-table td { padding: 15px; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
+
+/* --- MODALS --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,33,71,0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal-card { background: white; padding: 40px; border-radius: 8px; width: 100%; max-width: 400px; position: relative; }
+.modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; border: none; background: none; }
+
+/* --- NOTIFICATIONS --- */
+.toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; }
+.notif-pane { position: fixed; top: 80px; right: 40px; width: 280px; z-index: 1000; }
+
+input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; }
+label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.75rem; color: var(--text-gray); text-transform: uppercase; }

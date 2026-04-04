@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaultis – Secure Banking Core System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+<body>
+
+    <!-- SECTION: LANDING PAGE -->
+    <div id="landing-view">
+        <div class="top-utility">
+            <div class="utility-links"><a href="#">PERSONAL</a> | <a href="#">BUSINESS</a> | <a href="#">NRI</a></div>
+            <div class="utility-links"><a href="#"><i class="fas fa-headset"></i> SUPPORT</a></div>
+        </div>
+
+        <header class="main-header">
+            <div class="logo"><i class="fas fa-shield-halved"></i> Vaultis <span>Core</span></div>
+            <nav class="main-nav"><a href="#">Digital Banking</a><a href="#">Security</a><a href="#">Society Portal</a></nav>
+            <button class="btn-bank" onclick="toggleAuth('login')">Client Login</button>
+        </header>
+
+        <section class="hero-bank">
+            <div class="hero-content">
+                <h1>High-Performance <span>Institutional Banking</span></h1>
+                <p>Engineered with C++ OOP Core and Real-Time Security Handshaking for maximum asset protection.</p>
+                <div style="display:flex; gap:15px; margin-top:30px;">
+                    <button class="btn-bank btn-large" onclick="toggleAuth('register')">Open Account</button>
+                    <button class="btn-bank btn-outline" onclick="window.scrollTo(0, 1000)">Explore Products</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AUTH MODAL OVERLAY -->
+        <div id="auth-modal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div id="auth-login-box">
+                    <h3>SECURE LOGIN</h3>
+                    <form onsubmit="handleLogin(event)">
+                        <input type="email" id="login-email" placeholder="Institutional Email" required>
+                        <input type="password" id="login-password" placeholder="Access Key" required>
+                        <button type="submit" class="btn-bank" style="width:100%">Authenticate</button>
+                    </form>
+                    <p style="margin-top:15px; font-size:0.8rem;">New Member? <a href="#" onclick="toggleAuth('register')">Enroll Now</a></p>
+                </div>
+                <div id="auth-register-box" class="hidden">
+                    <h3>NEW ENROLLMENT</h3>
+                    <form onsubmit="handleRegister(event)">
+                        <input type="text" id="reg-name" placeholder="Full Legal Name" required>
+                        <input type="email" id="reg-email" placeholder="Email Address" required>
+                        <input type="password" id="reg-password" placeholder="Set Access Key" required>
+                        <input type="number" id="reg-pin" placeholder="Set 4-Digit PIN" required maxlength="4">
+                        <div style="background:#f8fafc; padding:10px; border-radius:4px; margin-bottom:15px;">
+                            <label style="font-size:0.65rem; color:var(--text-gray);">IF CLAIMING TERMINAL ACCOUNT:</label>
+                            <input type="number" id="reg-acc-no" placeholder="Existing Account No">
+                        </div>
+                        <button type="submit" class="btn-bank" style="width:100%">Open Account</button>
+                    </form>
+                    <p style="margin-top:15px; font-size:0.8rem;">Have an account? <a href="#" onclick="toggleAuth('login')">Sign In</a></p>
+                </div>
+                <button class="modal-close" onclick="closeModal('auth-modal')">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION: DASHBOARD -->
+    <div id="dashboard-view" class="hidden">
+        <aside class="portal-sidebar">
+            <div class="logo-box"><i class="fas fa-shield-halved"></i> Vaultis <span>Core</span></div>
+            <div class="nav-item active" onclick="switchSubView('summary')"><i class="fas fa-th-large"></i> Summary</div>
+            <div class="nav-item" onclick="switchSubView('transfer')"><i class="fas fa-paper-plane"></i> Transfer</div>
+            <div class="nav-item" onclick="switchSubView('history')"><i class="fas fa-file-invoice"></i> Statements</div>
+            <div class="nav-item" onclick="switchSubView('deposit')"><i class="fas fa-arrow-down"></i> Deposit</div>
+            <div class="nav-item" onclick="switchSubView('withdraw')"><i class="fas fa-arrow-up"></i> Withdraw</div>
+            <div class="nav-item" onclick="switchSubView('profile')"><i class="fas fa-user-cog"></i> Profile</div>
+            <div id="admin-only-nav" class="hidden"><div class="nav-item" onclick="switchSubView('reports')" style="color:#fbbf24;"><i class="fas fa-chart-pie"></i> REPORTS</div></div>
+            <button class="btn-bank signout-btn" onclick="handleLogout()">Sign Out</button>
+        </aside>
+
+        <header class="portal-header">
+            <div>CLIENT: <span id="display-user">Admin</span> | ID: <span id="client-id-tag">---</span></div>
+            <div style="display:flex; gap:15px; align-items:center;">
+                <button id="terminate-assist-btn" class="btn-bank hidden" onclick="terminateAssistance()">TERMINATE SESSION</button>
+                <div class="balance-strip">BALANCE: <span id="total-balance">₹0.00</span></div>
+            </div>
+        </header>
+
+        <main class="portal-main">
+            <div id="view-summary" class="sub-view active">
+                <div class="summary-grid">
+                    <div class="portal-card"><h4>CASH FLOW</h4><canvas id="spendChart"></canvas></div>
+                    <div class="mini-cards">
+                        <div class="portal-card inflow"><label>Inflow</label><div id="monthly-inflow">₹0.00</div></div>
+                        <div class="portal-card outflow"><label>Outflow</label><div id="monthly-outflow">₹0.00</div></div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table"><thead><tr><th>TYPE</th><th>ACC NO</th><th>STATUS</th><th>BALANCE</th></tr></thead><tbody id="portfolio-table-body"></tbody></table>
+                </div>
+            </div>
+
+            <div id="view-profile" class="sub-view">
+                <h3>SECURITY & PROFILE</h3>
+                <div id="security-reset-panel" class="hidden">
+                    <div class="portal-card" style="border:2px solid var(--bank-red);">
+                        <h4 style="color:var(--bank-red);">ADMIN RESET PROTOCOL</h4>
+                        <p>Request authorization from member to override credentials.</p>
+                        <button class="btn-bank" onclick="requestSecurityHandshake()">Send Handshake Signal</button>
+                    </div>
+                </div>
+                <form onsubmit="updateProfile(event)"><label>Legal Name</label><input type="text" id="prof-name"><button class="btn-bank">Update</button></form>
+                <form onsubmit="handlePasswordUpdate(event)"><label>Reset Password</label><input type="password" id="prof-new-pass"><button class="btn-bank">Override</button></form>
+            </div>
+
+            <!-- OTHER SUBVIEWS (Placeholders for Structure) -->
+            <div id="view-transfer" class="sub-view"><h3>TRANSFER</h3><form onsubmit="handleTransfer(event)"><input type="number" id="trans-dest-acc" placeholder="Beneficiary ID"><input type="number" id="trans-amount" placeholder="Amount"><button class="btn-bank">Send</button></form></div>
+            <div id="view-deposit" class="sub-view"><h3>DEPOSIT</h3><form onsubmit="handleOp(event,'deposit')"><input type="number" name="amount" placeholder="Amount"><button class="btn-bank">Deposit</button></form></div>
+            <div id="view-withdraw" class="sub-view"><h3>WITHDRAW</h3><form onsubmit="handleOp(event,'withdraw')"><input type="number" name="amount" placeholder="Amount"><button class="btn-bank">Withdraw</button></form></div>
+            <div id="view-history" class="sub-view"><h3>STATEMENTS</h3><div class="table-container"><table class="data-table"><thead><tr><th>DATE</th><th>DESC</th><th>AMOUNT</th></tr></thead><tbody id="recent-transactions-table-body"></tbody></table><div id="statement-pagination"></div></div></div>
+            <div id="view-reports" class="sub-view"><h3>SOCIETY REPORTS</h3><div class="portal-card"><label>Total Ledger</label><div id="total-money-held">₹0.00</div><label>Low Balance Accounts</label><div id="below-threshold-count">0</div></div></div>
+        </main>
+
+        <!-- GLOBAL MODALS -->
+        <div id="pinModal" class="modal-overlay hidden"><div class="modal-card"><h3>AUTHORIZATION</h3><p id="auth-desc"></p><input type="password" id="auth-pin-input" maxlength="4"><button id="pin-confirm-btn" class="btn-bank">Confirm</button></div></div>
+        <div id="consentModal" class="modal-overlay hidden"><div class="modal-card"><h3>MEMBER CONSENT</h3><input type="text" id="consent-code-input" placeholder="6-Digit Support Code"><button id="consent-confirm-btn" class="btn-bank">Connect</button></div></div>
+        
+        <div id="notification-pane" class="notif-pane"></div>
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="wasm/engine.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
