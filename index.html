@@ -30,7 +30,6 @@
                 <a href="#">Products</a>
                 <a href="#">Contact</a>
             </nav>
-            <button class="btn-bank btn-internet" onclick="toggleAuth('login')">INTERNET BANKING</button>
         </header>
 
         <div class="alert-bar">
@@ -244,25 +243,34 @@
                     <!-- 3. DEPOSIT -->
                     <div id="view-deposit" class="sub-view">
                         <div class="view-header" style="margin-bottom: 30px;">
-                            <h2 style="font-weight: 900; color: var(--bank-navy); letter-spacing: -1px;">Credit Portfolio Allocation</h2>
-                            <p style="color: var(--text-gray); font-weight: 500;">Add assets to your institutional holdings instantly.</p>
+                            <h2 style="font-weight: 900; color: var(--bank-navy); letter-spacing: -1px;">Credit
+                                Portfolio Allocation</h2>
+                            <p style="color: var(--text-gray); font-weight: 500;">Add assets to your institutional
+                                holdings instantly.</p>
                         </div>
-                        
+
                         <div class="portal-card" style="max-width: 600px; border-top: 5px solid #10b981;">
                             <form onsubmit="handleOp(event,'deposit')">
                                 <div style="margin-bottom: 25px;">
-                                    <label style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
-                                        <i class="fas fa-plus-circle" style="margin-right: 5px; color: #10b981;"></i> DEPOSIT AMOUNT (INR)
+                                    <label
+                                        style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
+                                        <i class="fas fa-plus-circle" style="margin-right: 5px; color: #10b981;"></i>
+                                        DEPOSIT AMOUNT (INR)
                                     </label>
                                     <div style="position: relative; display: flex; align-items: center;">
-                                        <span style="position: absolute; left: 16px; font-size: 1.5rem; font-weight: 900; color: var(--bank-navy);">₹</span>
-                                        <input type="number" name="amount" placeholder="0.00" style="width: 100%; padding: 16px 16px 16px 45px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.8rem; font-weight: 900; color: #10b981; background: #f8fafc;">
+                                        <span
+                                            style="position: absolute; left: 16px; font-size: 1.5rem; font-weight: 900; color: var(--bank-navy);">₹</span>
+                                        <input type="number" name="amount" placeholder="0.00"
+                                            style="width: 100%; padding: 16px 16px 16px 45px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.8rem; font-weight: 900; color: #10b981; background: #f8fafc;">
                                     </div>
-                                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-weight: 600;">Assets will be synchronized across the WASM network.</p>
+                                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-weight: 600;">
+                                        Assets will be synchronized across the WASM network.</p>
                                 </div>
 
-                                <button type="submit" class="btn-bank btn-authorize btn-full" style="padding: 20px; font-size: 1rem; background: #10b981; letter-spacing: 1.5px; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);">
-                                    <i class="fas fa-arrow-circle-down" style="margin-right: 10px;"></i> CONFIRM ASSET ALLOCATION
+                                <button type="submit" class="btn-bank btn-authorize btn-full"
+                                    style="padding: 20px; font-size: 1rem; background: #10b981; letter-spacing: 1.5px; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);">
+                                    <i class="fas fa-arrow-circle-down" style="margin-right: 10px;"></i> CONFIRM ASSET
+                                    ALLOCATION
                                 </button>
                             </form>
                         </div>
@@ -271,25 +279,35 @@
                     <!-- 4. WITHDRAW -->
                     <div id="view-withdraw" class="sub-view">
                         <div class="view-header" style="margin-bottom: 30px;">
-                            <h2 style="font-weight: 900; color: var(--bank-navy); letter-spacing: -1px;">Debit Authorization</h2>
-                            <p style="color: var(--text-gray); font-weight: 500;">Securely liquidate and withdraw capital from your core account.</p>
+                            <h2 style="font-weight: 900; color: var(--bank-navy); letter-spacing: -1px;">Debit
+                                Authorization</h2>
+                            <p style="color: var(--text-gray); font-weight: 500;">Securely liquidate and withdraw
+                                capital from your core account.</p>
                         </div>
-                        
+
                         <div class="portal-card" style="max-width: 600px; border-top: 5px solid var(--bank-red);">
                             <form onsubmit="handleOp(event,'withdraw')">
                                 <div style="margin-bottom: 25px;">
-                                    <label style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
-                                        <i class="fas fa-minus-circle" style="margin-right: 5px; color: var(--bank-red);"></i> WITHDRAWAL AMOUNT (INR)
+                                    <label
+                                        style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
+                                        <i class="fas fa-minus-circle"
+                                            style="margin-right: 5px; color: var(--bank-red);"></i> WITHDRAWAL AMOUNT
+                                        (INR)
                                     </label>
                                     <div style="position: relative; display: flex; align-items: center;">
-                                        <span style="position: absolute; left: 16px; font-size: 1.5rem; font-weight: 900; color: var(--bank-navy);">₹</span>
-                                        <input type="number" name="amount" placeholder="0.00" style="width: 100%; padding: 16px 16px 16px 45px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.8rem; font-weight: 900; color: var(--bank-red); background: #f8fafc;">
+                                        <span
+                                            style="position: absolute; left: 16px; font-size: 1.5rem; font-weight: 900; color: var(--bank-navy);">₹</span>
+                                        <input type="number" name="amount" placeholder="0.00"
+                                            style="width: 100%; padding: 16px 16px 16px 45px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.8rem; font-weight: 900; color: var(--bank-red); background: #f8fafc;">
                                     </div>
-                                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-weight: 600;">Debit requires verified session authorization.</p>
+                                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-weight: 600;">
+                                        Debit requires verified session authorization.</p>
                                 </div>
 
-                                <button type="submit" class="btn-bank btn-authorize btn-full" style="padding: 20px; font-size: 1rem; letter-spacing: 1.5px; box-shadow: 0 10px 15px -3px rgba(237, 28, 36, 0.2);">
-                                    <i class="fas fa-arrow-circle-up" style="margin-right: 10px;"></i> AUTHORIZE LIQUIDATION
+                                <button type="submit" class="btn-bank btn-authorize btn-full"
+                                    style="padding: 20px; font-size: 1rem; letter-spacing: 1.5px; box-shadow: 0 10px 15px -3px rgba(237, 28, 36, 0.2);">
+                                    <i class="fas fa-arrow-circle-up" style="margin-right: 10px;"></i> AUTHORIZE
+                                    LIQUIDATION
                                 </button>
                             </form>
                         </div>
