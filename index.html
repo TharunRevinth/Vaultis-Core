@@ -1,80 +1,457 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vaultis Core – Institutional Banking</title>
-    <link rel="stylesheet" href="css/style.css?v=1.0.4">
+    <title>Vaultis – Secure Banking Core System</title>
+    <link rel="stylesheet" href="css/style.css?v=1.0.8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 </head>
+
 <body>
+
+    <!-- SECTION: LANDING PAGE -->
     <div id="landing-view">
+        <div class="top-utility-bar">
+            <div class="utility-left">
+                <a href="#">PERSONAL</a> | <a href="#">BUSINESS</a> | <a href="#">NRI</a> | <a href="#">COMMERCIAL</a>
+            </div>
+            <div class="utility-right">
+                <a href="#">24/7 SUPPORT</a> | <a href="#">LOCATE US</a>
+            </div>
+        </div>
         <header class="main-header">
             <div class="logo">Vaultis <span class="text-red">Core</span></div>
-            <nav class="main-nav"><a href="#">About Us</a><a href="#">Products</a><a href="#">Contact</a></nav>
+            <nav class="main-nav">
+                <a href="#">About Us</a>
+                <a href="#">Products</a>
+                <a href="#">Contact</a>
+            </nav>
             <button class="btn-bank btn-internet" onclick="toggleAuth('login')">INTERNET BANKING</button>
         </header>
-        <div class="alert-bar"><span class="alert-tag">LATEST</span><marquee>Safe Banking Alert: Never share OTP or PIN. | C++ WASM Engine Active.</marquee></div>
+
+        <div class="alert-bar">
+            <span class="alert-tag">LATEST</span>
+            <marquee>Safe Banking Alert: Never share OTP or PIN. | Fixed Deposit rates hiked to 7.8%* | C++ WASM Engine
+                Active.</marquee>
+        </div>
+
         <section class="hero-bank">
             <div class="hero-container">
-                <div class="hero-text"><h1>Banking for<br>the Future.</h1><p>Institutional grade security with high-performance WASM processing.</p></div>
+                <div class="hero-text">
+                    <h1>Banking for<br>the Future.</h1>
+                    <p>Institutional grade security with high-performance WASM processing.</p>
+                </div>
+
                 <div class="login-card">
                     <h3>Secure Sign In</h3>
                     <div id="auth-login-box">
-                        <label>MEMBER EMAIL</label><input type="email" id="login-email" placeholder="alpha19@gmail.com">
-                        <label>PASSWORD</label><input type="password" id="login-password" placeholder="••••••••••">
+                        <label>MEMBER EMAIL</label>
+                        <input type="email" id="login-email" placeholder="Enter E-mail">
+                        <label>PASSWORD</label>
+                        <input type="password" id="login-password" placeholder="Enter Password">
                         <button class="btn-bank btn-authorize" onclick="handleLogin(event)">AUTHORIZE SESSION</button>
-                        <div class="login-footer">New member? <a href="#" onclick="toggleAuth('register')">Join Now</a> | <a href="#">Forgot Password?</a></div>
+                        <div class="login-footer">
+                            New member? <a href="#" onclick="toggleAuth('register')" class="join-link">Join Now</a> | <a
+                                href="#" onclick="toggleAuth('forgot')">Forgot Password?</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <section class="products-section">
             <h2 class="section-title">Institutional Portfolio Options</h2>
             <div class="product-grid">
-                <div class="product-card"><div class="prod-img img1"></div><h4>Savings Account</h4></div>
-                <div class="product-card"><div class="prod-img img2"></div><h4>Fixed Deposits</h4></div>
-                <div class="product-card"><div class="prod-img img3"></div><h4>Global Assets</h4></div>
-                <div class="product-card"><div class="prod-img img4"></div><h4>Member Cards</h4></div>
+                <div class="product-card">
+                    <div class="prod-img img1"></div>
+                    <h4>Savings Account</h4>
+                </div>
+                <div class="product-card">
+                    <div class="prod-img img2"></div>
+                    <h4>Fixed Deposits</h4>
+                </div>
+                <div class="product-card">
+                    <div class="prod-img img3"></div>
+                    <h4>Global Assets</h4>
+                </div>
+                <div class="product-card">
+                    <div class="prod-img img4"></div>
+                    <h4>Member Cards</h4>
+                </div>
             </div>
         </section>
-        <div id="auth-modal" class="modal-overlay hidden"><div class="modal-card"><div id="auth-register-box" class="hidden"><h3>NEW ENROLLMENT</h3><form onsubmit="handleRegister(event)"><input type="text" id="reg-name" placeholder="Full Name" required><input type="email" id="reg-email" placeholder="Email" required><input type="password" id="reg-password" placeholder="Password" required><input type="number" id="reg-pin" placeholder="4-Digit PIN" required maxlength="4"><button type="submit" class="btn-bank btn-authorize" style="width:100%">Enroll Member</button></form></div><button class="modal-close" onclick="closeModal('auth-modal')">&times;</button></div></div>
+
+        <div id="auth-modal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <div id="auth-register-box" class="hidden">
+                    <h3><i class="fas fa-user-plus"></i> NEW ENROLLMENT</h3>
+                    <form onsubmit="handleRegister(event)">
+                        <input type="text" id="reg-name" placeholder="Full Legal Name" required>
+                        <input type="email" id="reg-email" placeholder="Email Address" required>
+                        <input type="password" id="reg-password" placeholder="Password" required>
+                        <input type="number" id="reg-pin" placeholder="Set 4-Digit PIN" required maxlength="4">
+                        <label style="margin-top:10px;">(Optional) Terminal Linking</label>
+                        <input type="number" id="reg-offline-acc" placeholder="Manager-Issued Account No (Optional)">
+                        <button type="submit" class="btn-bank btn-authorize" style="width:100%">Enroll Member</button>
+                    </form>
+                </div>
+                <div id="auth-forgot-box" class="hidden">
+                    <h3><i class="fas fa-shield-alt"></i> RESET PASSWORD</h3>
+                    <form onsubmit="handleForgotPassword(event)">
+                        <input type="email" id="forgot-email" placeholder="Registered Email Address" required>
+                        <input type="number" id="forgot-pin" placeholder="Secure 4-Digit PIN" required maxlength="4">
+                        <input type="password" id="forgot-new-pass" placeholder="New Secure Password" required>
+                        <button type="submit" class="btn-bank btn-authorize" style="width:100%">Update Password</button>
+                    </form>
+                </div>
+                <button class="modal-close" onclick="closeModal('auth-modal')">&times;</button>
+            </div>
+        </div>
     </div>
 
+    <!-- SECTION: DASHBOARD -->
     <div id="dashboard-view" class="hidden">
         <aside class="portal-sidebar">
             <div class="logo-box">Vaultis <span class="text-red">Core</span></div>
-            <div class="nav-item active" onclick="switchSubView('summary')"><i class="fas fa-th-large"></i> Summary</div>
-            <div class="nav-item" onclick="switchSubView('transfer')"><i class="fas fa-paper-plane"></i> Transfer</div>
-            <div class="nav-item" onclick="switchSubView('history')"><i class="fas fa-file-invoice"></i> Statements</div>
+
+            <div class="nav-group">Portfolio</div>
+            <div class="nav-item active" onclick="switchSubView('summary')"><i class="fas fa-th-large"></i> Summary
+            </div>
+            <div class="nav-item" onclick="switchSubView('transfer')"><i class="fas fa-paper-plane"></i> Internal
+                Transfer</div>
+            <div class="nav-item" onclick="switchSubView('history')"><i class="fas fa-file-invoice"></i> e-Statements
+            </div>
+            <div class="nav-item nav-yellow hidden" id="nav-society-reports" onclick="switchSubView('reports')"><i
+                    class="fas fa-chart-pie"></i> Society Reports</div>
+
+            <div class="nav-group">Transactions</div>
             <div class="nav-item" onclick="switchSubView('deposit')"><i class="fas fa-arrow-down"></i> Deposit</div>
             <div class="nav-item" onclick="switchSubView('withdraw')"><i class="fas fa-arrow-up"></i> Withdraw</div>
+
+            <div class="nav-group">Settings</div>
             <div class="nav-item" onclick="switchSubView('profile')"><i class="fas fa-user-cog"></i> Profile</div>
-            <div id="admin-only-nav" class="hidden"><div class="nav-item" onclick="switchSubView('reports')" style="color:#fbbf24;"><i class="fas fa-chart-pie"></i> REPORTS</div></div>
-            <button class="btn-bank signout-btn" onclick="handleLogout()">Sign Out</button>
+
+            <button class="signout-btn" onclick="handleLogout()">SIGN OUT</button>
         </aside>
+
         <div class="portal-body">
-            <header class="portal-header"><div>CLIENT: <span id="display-user">Admin</span> | ID: <span id="client-id-tag">---</span></div><div class="balance-strip">BALANCE: <span id="total-balance">₹0.00</span></div></header>
+            <header class="portal-header">
+                <div class="header-info">
+                    CLIENT: <span id="display-user">Admin</span> | ID: <span id="client-id-tag">---</span>
+                    <span id="assisting-badge" class="badge-red hidden">ASSISTING MEMBER</span>
+                </div>
+                <div class="header-actions">
+                    <button id="terminate-assist-btn" class="btn-terminate hidden"
+                        onclick="terminateAssistance()">TERMINATE ASSISTANCE</button>
+                    <div class="balance-strip">BALANCE: <span id="total-balance">₹0.00</span></div>
+                </div>
+            </header>
+
             <div class="portal-content-split">
                 <main class="portal-main">
-                    <div id="view-summary" class="sub-view active"><div class="summary-grid"><div class="portal-card"><h4>CASH FLOW</h4><div style="position:relative; height:250px; width:100%;"><canvas id="spendChart"></canvas></div></div><div class="mini-cards"><div class="portal-card flow-card inflow"><label>Inflow</label><div id="monthly-inflow">₹0.00</div></div><div class="portal-card flow-card outflow"><label>Outflow</label><div id="monthly-outflow">₹0.00</div></div></div></div><div class="table-container"><table class="data-table"><thead><tr><th>TYPE</th><th>ACC NO</th><th>STATUS</th><th>BALANCE</th></tr></thead><tbody id="portfolio-table-body"></tbody></table></div></div>
-                    <div id="view-transfer" class="sub-view"><h3>INTERNAL TRANSFER</h3><form onsubmit="handleTransfer(event)"><label>BENEFICIARY ID</label><input type="number" id="trans-dest-acc"><label>AMOUNT</label><input type="number" id="trans-amount"><button class="btn-bank btn-authorize">AUTHORIZE</button></form></div>
-                    <div id="view-deposit" class="sub-view"><h3>CREDIT FUNDS</h3><form onsubmit="handleOp(event,'deposit')"><label>AMOUNT</label><input type="number" name="amount"><button class="btn-bank btn-authorize">DEPOSIT</button></form></div>
-                    <div id="view-withdraw" class="sub-view"><h3>DEBIT FUNDS</h3><form onsubmit="handleOp(event,'withdraw')"><label>AMOUNT</label><input type="number" name="amount"><button class="btn-bank btn-authorize">WITHDRAW</button></form></div>
-                    <div id="view-history" class="sub-view"><h3>STATEMENTS</h3><div class="table-container"><table class="data-table"><thead><tr><th>DATE</th><th>DESC</th><th>AMOUNT</th></tr></thead><tbody id="recent-transactions-table-body"></tbody></table></div></div>
-                    <div id="view-profile" class="sub-view"><h3>PROFILE</h3><form onsubmit="updateProfile(event)"><label>LEGAL NAME</label><input type="text" id="prof-name"><button class="btn-bank">UPDATE</button></form><form onsubmit="handlePasswordUpdate(event)" style="margin-top:20px;"><label>RESET PASSWORD</label><input type="password" id="prof-new-pass"><button class="btn-bank">OVERRIDE</button></form></div>
-                    <div id="view-reports" class="sub-view"><h3>SOCIETY REPORTS</h3><div class="portal-card"><label>Total Bank Ledger</label><div id="total-money-held">₹0.00</div></div></div>
+                    <!-- 1. SUMMARY -->
+                    <div id="view-summary" class="sub-view active">
+                        <div class="summary-grid">
+                            <div class="portal-card">
+                                <h4>CASH FLOW TREND</h4>
+                                <div style="position: relative; height: 250px; width: 100%;">
+                                    <canvas id="spendChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="mini-cards">
+                                <div class="flow-card inflow"><label>Inflow</label>
+                                    <div id="monthly-inflow">₹0.00</div>
+                                </div>
+                                <div class="flow-card outflow"><label>Outflow</label>
+                                    <div id="monthly-outflow">₹0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>TYPE</th>
+                                        <th>ACC NO</th>
+                                        <th>STATUS</th>
+                                        <th>BALANCE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="portfolio-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 2. TRANSFER -->
+                    <div id="view-transfer" class="sub-view">
+                        <div class="view-header" style="margin-bottom: 30px;">
+                            <h2 style="font-weight: 900; color: var(--bank-navy); letter-spacing: -1px;">Secure Fund
+                                Transfer</h2>
+                            <p style="color: var(--text-gray); font-weight: 500;">Institutional capital movement with
+                                real-time WASM validation.</p>
+                        </div>
+
+                        <div class="portal-card" style="max-width: 600px; border-top: 5px solid var(--bank-white);">
+                            <form onsubmit="handleTransfer(event)">
+                                <div style="margin-bottom: 25px;">
+                                    <label
+                                        style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
+                                        <i class="fas fa-user-shield"
+                                            style="margin-right: 5px; color: var(--bank-red);"></i> BENEFICIARY ACCOUNT
+                                    </label>
+                                    <div style="position: relative;">
+                                        <input type="number" id="trans-dest-acc" placeholder="Recipient ID"
+                                            style="width: 100%; padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.1rem; font-weight: 700; background: #f8fafc;">
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; align-items: center; gap: 15px; margin: 30px 0;">
+                                    <div style="flex: 1; height: 1px; background: #e2e8f0;"></div>
+                                    <div style="color: #cbd5e1; font-size: 0.8rem;"><i class="fas fa-exchange-alt"></i>
+                                    </div>
+                                    <div style="flex: 1; height: 1px; background: #e2e8f0;"></div>
+                                </div>
+
+                                <div style="margin-bottom: 30px;">
+                                    <label
+                                        style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
+                                        <i class="fas fa-money-bill-wave"
+                                            style="margin-right: 5px; color: var(--bank-red);"></i> TRANSFER AMOUNT
+                                        (INR)
+                                    </label>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <span
+                                            style="position: absolute; left: 16px; font-size: 1.5rem; font-weight: 900; color: var(--bank-navy);">₹</span>
+                                        <input type="number" id="trans-amount" placeholder="0.00"
+                                            style="width: 100%; padding: 16px 16px 16px 45px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.8rem; font-weight: 900; color: var(--bank-red); background: #f8fafc;">
+                                    </div>
+                                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-weight: 600;">
+                                        Funds will be deducted from your liquid balance instantly.</p>
+                                </div>
+
+                                <button type="submit" class="btn-bank btn-authorize btn-full"
+                                    style="padding: 20px; font-size: 1rem; letter-spacing: 1.5px; box-shadow: 0 10px 15px -3px rgba(237, 28, 36, 0.2);">
+                                    <i class="fas fa-lock" style="margin-right: 10px;"></i> AUTHORIZE SESSION TRANSFER
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 3. DEPOSIT -->
+                    <div id="view-deposit" class="sub-view">
+                        <div class="view-header" style="margin-bottom: 30px;">
+                            <h2 style="font-weight: 900; color: var(--bank-navy); letter-spacing: -1px;">Credit Portfolio Allocation</h2>
+                            <p style="color: var(--text-gray); font-weight: 500;">Add assets to your institutional holdings instantly.</p>
+                        </div>
+                        
+                        <div class="portal-card" style="max-width: 600px; border-top: 5px solid #10b981;">
+                            <form onsubmit="handleOp(event,'deposit')">
+                                <div style="margin-bottom: 25px;">
+                                    <label style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
+                                        <i class="fas fa-plus-circle" style="margin-right: 5px; color: #10b981;"></i> DEPOSIT AMOUNT (INR)
+                                    </label>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <span style="position: absolute; left: 16px; font-size: 1.5rem; font-weight: 900; color: var(--bank-navy);">₹</span>
+                                        <input type="number" name="amount" placeholder="0.00" style="width: 100%; padding: 16px 16px 16px 45px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.8rem; font-weight: 900; color: #10b981; background: #f8fafc;">
+                                    </div>
+                                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-weight: 600;">Assets will be synchronized across the WASM network.</p>
+                                </div>
+
+                                <button type="submit" class="btn-bank btn-authorize btn-full" style="padding: 20px; font-size: 1rem; background: #10b981; letter-spacing: 1.5px; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);">
+                                    <i class="fas fa-arrow-circle-down" style="margin-right: 10px;"></i> CONFIRM ASSET ALLOCATION
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 4. WITHDRAW -->
+                    <div id="view-withdraw" class="sub-view">
+                        <div class="view-header" style="margin-bottom: 30px;">
+                            <h2 style="font-weight: 900; color: var(--bank-navy); letter-spacing: -1px;">Debit Authorization</h2>
+                            <p style="color: var(--text-gray); font-weight: 500;">Securely liquidate and withdraw capital from your core account.</p>
+                        </div>
+                        
+                        <div class="portal-card" style="max-width: 600px; border-top: 5px solid var(--bank-red);">
+                            <form onsubmit="handleOp(event,'withdraw')">
+                                <div style="margin-bottom: 25px;">
+                                    <label style="display: block; font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">
+                                        <i class="fas fa-minus-circle" style="margin-right: 5px; color: var(--bank-red);"></i> WITHDRAWAL AMOUNT (INR)
+                                    </label>
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <span style="position: absolute; left: 16px; font-size: 1.5rem; font-weight: 900; color: var(--bank-navy);">₹</span>
+                                        <input type="number" name="amount" placeholder="0.00" style="width: 100%; padding: 16px 16px 16px 45px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1.8rem; font-weight: 900; color: var(--bank-red); background: #f8fafc;">
+                                    </div>
+                                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 10px; font-weight: 600;">Debit requires verified session authorization.</p>
+                                </div>
+
+                                <button type="submit" class="btn-bank btn-authorize btn-full" style="padding: 20px; font-size: 1rem; letter-spacing: 1.5px; box-shadow: 0 10px 15px -3px rgba(237, 28, 36, 0.2);">
+                                    <i class="fas fa-arrow-circle-up" style="margin-right: 10px;"></i> AUTHORIZE LIQUIDATION
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- 5. HISTORY -->
+                    <div id="view-history" class="sub-view">
+                        <h3>Transaction Ledger</h3>
+                        <div class="filter-panel">
+                            <div class="filter-group">
+                                <label>Start Date</label>
+                                <input type="date" id="hist-start">
+                            </div>
+                            <div class="filter-group">
+                                <label>End Date</label>
+                                <input type="date" id="hist-end">
+                            </div>
+                            <button class="btn-search" onclick="applyHistoryFilter()">SEARCH LEDGER</button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>AMOUNT</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-transactions-table-body"></tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-wrapper">
+                            <button class="btn-paginate" onclick="changePage(-1)"><i class="fas fa-chevron-left"></i>
+                                PREV</button>
+                            <span id="page-indicator" class="page-indicator-text">Page 1</span>
+                            <button class="btn-paginate" onclick="changePage(1)">NEXT <i
+                                    class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- 6. SOCIETY REPORTS (ADMIN) -->
+                    <div id="view-reports" class="sub-view">
+                        <h3>Institutional Portfolio Reports</h3>
+                        <div class="summary-grid" style="grid-template-columns: 1fr 1fr; margin-top:20px;">
+                            <div class="portal-card" style="text-align:center">
+                                <h4>Total Society Liquidity</h4>
+                                <div id="total-liquidity-display" class="session-code">₹0.00</div>
+                                <p style="font-size:0.8rem; color:var(--text-gray); margin-top:10px;">Aggregated sum of
+                                    all
+                                    member deposits currently processed via C++ WASM Heartbeat.</p>
+                            </div>
+                            <div class="portal-card" style="text-align:center">
+                                <h4>Regulatory Compliance</h4>
+                                <div id="low-balance-count-display" class="session-code">0</div>
+                                <p style="font-size:0.8rem; color:var(--text-gray); margin-top:10px;">Number of managed
+                                    accounts currently below the ₹500 regulatory threshold.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7. PROFILE -->
+                    <div id="view-profile" class="sub-view">
+                        <div class="profile-grid">
+                            <div class="portal-card">
+                                <h4>Identity Settings</h4>
+                                <form onsubmit="updateProfile(event)">
+                                    <label>IDENTITY NAME</label><input type="text" id="prof-name">
+                                    <button type="submit" class="btn-bank" style="width:auto">SYNC IDENTITY</button>
+                                </form>
+                            </div>
+                            <div class="portal-card">
+                                <h4>UPDATE SECURE PIN</h4>
+                                <form onsubmit="updatePin(event)">
+                                    <label>New 4-digit PIN</label><input type="password" id="prof-pin" maxlength="4">
+                                    <button type="submit" class="btn-bank btn-blue" style="width:auto">UPDATE
+                                        PIN</button>
+                                </form>
+                            </div>
+                            <div class="portal-card wide-card">
+                                <h4>CHANGE ACCOUNT PASSWORD</h4>
+                                <form onsubmit="handlePasswordUpdate(event)">
+                                    <label>New Password</label><input type="password" id="prof-new-pass">
+                                    <button type="submit" class="btn-bank btn-pink" style="width:100%">SECURE PASSWORD
+                                        UPDATE</button>
+                                </form>
+                            </div>
+                            <div id="manager-handshake-card" class="portal-card wide-card hidden"
+                                style="border:2px solid var(--bank-red);">
+                                <h4 style="color:var(--bank-red);">ADMIN SECURITY RESET</h4>
+                                <p style="font-size:0.8rem; margin-bottom:15px;">Send a handshake signal to the member.
+                                </p>
+                                <button class="btn-bank btn-full" onclick="requestSecurityHandshake()">SEND
+                                    SIGNAL</button>
+                            </div>
+                        </div>
+                    </div>
                 </main>
-                <aside class="portal-right-panel"><div class="sidebar-section support"><h4>SUPPORT IDENTITY</h4><div class="sidebar-card"><p>Verification Code:</p><div id="support-token-display" class="session-code">------</div></div></div><div class="sidebar-section alerts"><h4>SECURITY ALERTS</h4><div id="notification-pane"><p style="opacity:0.5; font-style:italic;">No active alerts.</p></div></div></aside>
+
+                <aside class="portal-right-panel">
+
+                    <div class="sidebar-section">
+                        <h4>SECURITY TIPS</h4>
+                        <div class="sidebar-card bg-light">
+                            <p style="font-size: 0.75rem;">Never share your PIN with anyone, including staff.</p>
+                        </div>
+                    </div>
+                    <div class="sidebar-section alerts">
+                        <h4>ALERTS</h4>
+                        <div id="notification-pane">
+                            <p style="opacity:0.5; font-size:0.75rem;">No active security alerts.</p>
+                        </div>
+                    </div>
+                    <div id="handshake-sig-pane"></div>
+                    <div class="sidebar-section support">
+                        <h4>Support Identity</h4>
+                        <div id="support-token-display" class="session-code">------</div>
+                    </div>
+                    <div class="sidebar-section">
+                        <h4>CLOUD STATUS</h4>
+                        <div class="sidebar-card bg-light">
+                            <h5>Sync Active.</h5>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </div>
-        <div id="pinModal" class="modal-overlay hidden"><div class="modal-card"><h3>AUTHORIZATION</h3><p id="auth-desc"></p><input type="password" id="auth-pin-input" maxlength="4"><button id="pin-confirm-btn" class="btn-bank btn-authorize" style="width:100%">Verify</button></div></div>
+
+        <!-- GLOBAL OVERLAYS -->
+        <div id="pinModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <h3 style="display:flex; align-items:center; gap:10px;"><i class="fas fa-lock"
+                        style="color:var(--bank-navy);"></i> <span id="pin-modal-title">AUTHORIZATION</span></h3>
+                <p id="auth-desc" style="color: #64748b; font-size: 0.85rem; margin-bottom:20px;">Confirm Secure PIN to
+                    proceed.</p>
+                <input type="password" id="auth-pin-input" maxlength="4" placeholder="••••">
+                <div class="modal-actions">
+                    <button class="btn-bank btn-outline" onclick="closeModal('pinModal')">CANCEL</button>
+                    <button id="pin-confirm-btn" class="btn-bank btn-navy">VERIFY</button>
+                </div>
+            </div>
+        </div>
+        <div id="assistanceModal" class="modal-overlay hidden">
+            <div class="modal-card">
+                <h3 style="color:var(--bank-navy); display:flex; align-items:center; gap:10px;"><i
+                        class="fas fa-shield-alt" style="color:var(--bank-red);"></i> MEMBER CONSENT</h3>
+                <p>Target Client ID: <strong id="assisting-target-id-display" style="color:var(--bank-red)">---</strong>
+                </p>
+                <p style="font-size:0.8rem; color:#64748b; margin-bottom:20px; margin-top:5px; line-height: 1.5;">Please
+                    request the 6-digit Support Identity code from the member to connect to their session securely.</p>
+                <input type="text" id="sidebar-consent-code" placeholder="Enter 6-Digit Code">
+                <div class="modal-actions">
+                    <button class="btn-bank btn-outline" onclick="closeModal('assistanceModal')">CANCEL</button>
+                    <button class="btn-bank btn-navy" onclick="confirmAssistance()">SECURE CONNECT</button>
+                </div>
+            </div>
+        </div>
         <div id="toast-container" class="toast-container"></div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="engine.js"></script>
     <script src="js/app.js"></script>
 </body>
+
 </html>
