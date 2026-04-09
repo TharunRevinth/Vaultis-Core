@@ -2,6 +2,9 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <fstream>
+#include <ctime>
+#include <iomanip>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
@@ -13,13 +16,20 @@ using namespace std;
 
 /**
  * @class Transaction
- * @brief Represents a single financial record.
+ * @brief Represents a single financial record with date/time.
  */
 class Transaction {
 public:
     string type;
     double amount;
-    Transaction(string t, double a) : type(t), amount(a) {}
+    string timestamp;
+
+    Transaction(string t, double a) : type(t), amount(a) {
+        time_t now = time(0);
+        char buf[80];
+        strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", localtime(&now));
+        timestamp = string(buf);
+    }
 };
 
 /**
@@ -34,33 +44,42 @@ private:
     vector<Transaction> history;
 
 public:
-    Account(int no, string n, double b) : accNo(no), name(n), balance(b) {}
+    Account(int no, string n, double b) : accNo(no), name(n), balance(b) {
+        logTransaction("INITIAL", b);
+    }
 
-    // Member Functions (OOP Requirement)
     void updateBalance(double newBal) { balance = newBal; }
     void logTransaction(string t, double a) { history.push_back(Transaction(t, a)); }
+    
     int getAccNo() const { return accNo; }
     double getBalance() const { return balance; }
     string getName() const { return name; }
+
+    void showLast5() {
+        cout << "\n--- Last 5 Transactions for " << name << " ---" << endl;
+        int start = max(0, (int)history.size() - 5);
+        for(int i = start; i < history.size(); i++) {
+            cout << "[" << history[i].timestamp << "] " << history[i].type << " : ₹" << history[i].amount << endl;
+        }
+    }
 };
 
 /**
  * @class BankSystem
- * @brief The Master Engine containing the core banking logic.
+ * @brief Handles vectors and file persistence.
  */
 class BankSystem {
 private:
     vector<Account> accounts;
+    const string DB_NAME = "accounts_db.txt";
 
 public:
-    // Member Function 1: Identity Generation
     int addAccount(int no, string n, double b) {
         for(auto &a : accounts) if(a.getAccNo() == no) return -1;
         accounts.push_back(Account(no, n, b));
         return no;
     }
 
-    // Member Function 2: Credit Processing
     double processDeposit(int no, double amt) {
         for(auto &a : accounts) if(a.getAccNo() == no) {
             double nb = a.getBalance() + amt;
@@ -70,10 +89,9 @@ public:
         return -1.0;
     }
 
-    // Member Function 3: Debit Authorization
     double processWithdraw(int no, double amt) {
         for(auto &a : accounts) if(a.getAccNo() == no) {
-            if(a.getBalance() < amt) return -2.0; // Insufficient
+            if(a.getBalance() < amt) return -2.0;
             double nb = a.getBalance() - amt;
             a.updateBalance(nb); a.logTransaction("WIT", amt);
             return nb;
@@ -81,25 +99,44 @@ public:
         return -1.0;
     }
 
-    // Member Function 4: Society Liquidity Report
+    // Requirement: File Persistence
+    void saveToFile() {
+        ofstream out(DB_NAME);
+        for(auto &a : accounts) {
+            out << a.getAccNo() << "|" << a.getName() << "|" << a.getBalance() << endl;
+        }
+        out.close();
+    }
+
+    void loadFromFile() {
+        ifstream in(DB_NAME);
+        if(!in) return;
+        accounts.clear();
+        int no; string n; double b; string line;
+        while(in >> no) {
+            in.ignore(1); // skip pipe
+            getline(in, n, '|');
+            in >> b;
+            accounts.push_back(Account(no, n, b));
+        }
+        in.close();
+    }
+
     double getTotalLiquidity() {
         double total = 0;
         for(auto &a : accounts) total += a.getBalance();
         return total;
     }
 
-    // Member Function 5: Regulatory Compliance Check
     int countLowBalance(double limit) {
         int c = 0;
         for(auto &a : accounts) if(a.getBalance() < limit) c++;
         return c;
     }
 
-    // Member Function 6: System Lifecycle Management
     void reset() { accounts.clear(); }
 };
 
-// Global Instance
 BankSystem core;
 
 extern "C" {
@@ -108,10 +145,13 @@ extern "C" {
     EMSCRIPTEN_KEEPALIVE double withdraw(int no, double amt) { return core.processWithdraw(no, amt); }
     EMSCRIPTEN_KEEPALIVE double get_total_money() { return core.getTotalLiquidity(); }
     EMSCRIPTEN_KEEPALIVE int get_below_threshold_count(double limit) { return core.countLowBalance(limit); }
+    EMSCRIPTEN_KEEPALIVE void save_system() { core.saveToFile(); }
+    EMSCRIPTEN_KEEPALIVE void load_system() { core.loadFromFile(); }
     EMSCRIPTEN_KEEPALIVE void clear_system() { core.reset(); }
 }
 
 int main() {
-    printf("Vaultis Core Engine: Institutional Build Active.\n");
+    core.loadFromFile();
+    printf("Vaultis AI Engine: Requirement 3.0 Compliance Active.\n");
     return 0;
 }
