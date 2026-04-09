@@ -53,7 +53,7 @@ async function handleRegister(e) {
     const offlineAccId = document.getElementById('reg-offline-acc').value.trim();
 
     if (offlineAccId) {
-        const { data: existing, error: checkErr } = await supabaseClient.from('accounts').select('*').eq('acc_no', parseInt(offlineAccId)).single();
+        const { data: existing, error: checkErr } = await supabaseClient.from('accounts').select('*').eq('acc_no', parseInt(offlineAccId)).maybeSingle();
         if (!existing || existing.user_id) return showToast("Invalid or already linked Terminal Account.", "error");
         if (existing.temp_pin !== pin) return showToast("Terminal Account PIN mismatch. Please confirm your pin.", "error");
     }
@@ -91,8 +91,16 @@ async function handleForgotPassword(e) {
     }
 }
 
+async function updateStats(user) {
+    const { data: acc } = await supabaseClient.from('accounts').select('acc_no').eq('user_id', user.id).maybeSingle();
+    if (!acc) return;
+    const myAccNo = acc.acc_no;
+
+    const { data: txs } = await supabaseClient.from('transactions').select('amount').eq('acc_no', myAccNo);
+}
+
 async function initDashboard(user) {
-    const { data: p } = await supabaseClient.from('profiles').select('*').eq('id', user.id).single();
+    const { data: p } = await supabaseClient.from('profiles').select('*').eq('id', user.id).maybeSingle();
     if (p) {
         const newCode = Math.floor(100000 + Math.random() * 900000).toString();
         await supabaseClient.from('profiles').update({ help_code: newCode }).eq('id', user.id);
@@ -137,7 +145,7 @@ async function requestAdminAssistance(tId, tAcc) {
 
 async function confirmAssistance() {
     const code = document.getElementById('sidebar-consent-code').value.trim();
-    const { data: p } = await supabaseClient.from("profiles").select("help_code, full_name").eq("id", assistedUserId).single();
+    const { data: p } = await supabaseClient.from("profiles").select("help_code, full_name").eq("id", assistedUserId).maybeSingle();
     if (p && code === p.help_code) {
         showToast("Connected to " + p.full_name);
         setupBridgeListener(assistedUserId);
@@ -272,7 +280,7 @@ async function respondToHandshake(auth) {
         const { error } = await supabaseClient.from('handshake_signals').update({ status: stat, recovery_token: tok }).eq('id', sig.id);
         if (!error) {
             showToast(auth ? "Identity Handshake Authorized." : "Access Denied.");
-            const { data } = await supabaseClient.from('handshake_signals').select('*').eq('id', sig.id).single();
+            const { data } = await supabaseClient.from('handshake_signals').select('*').eq('id', sig.id).maybeSingle();
             handleHandshakeSignal(data);
         } else {
             showToast(error.message, "error");
