@@ -1,0 +1,58 @@
+[
+  {
+    "acc_no": 450923,
+    "user_id": null,
+    "name": "tharun",
+    "balance": 500,
+    "created_at": "2026-04-03T14:13:23.558434+00:00",
+    "temp_pin": null
+  },
+  {
+    "acc_no": 389353,
+    "user_id": null,
+    "name": "arun",
+    "balance": 1000,
+    "created_at": "2026-04-03T15:11:50.361442+00:00",
+    "temp_pin": "2525"
+  },
+  {
+    "acc_no": 463721,
+    "user_id": "3dbd8366-0e26-4ff5-bdf1-1aebbe28547c",
+    "name": "alpha",
+    "balance": 110,
+    "created_at": "2026-03-29T13:48:05.776018+00:00",
+    "temp_pin": null
+  },
+  {
+    "acc_no": 140583,
+    "user_id": "85f9c69a-f5c8-458f-af19-8f946c23f5a5",
+    "name": "alpha19",
+    "balance": 10485,
+    "created_at": "2026-03-29T15:46:42.824954+00:00",
+    "temp_pin": null
+  },
+  {
+    "acc_no": 405075,
+    "user_id": "7c1bfdeb-6a73-41ea-b858-a654100d0b87",
+    "name": "arjun",
+    "balance": 500,
+    "created_at": "2026-04-09T09:50:20.412303+00:00",
+    "temp_pin": null
+  },
+  {
+    "acc_no": 601052,
+    "user_id": "a51ba38c-d492-4cae-9beb-64566764f162",
+    "name": "alpha18",
+    "balance": 6999,
+    "created_at": "2026-03-29T15:47:30.27578+00:00",
+    "temp_pin": null
+  },
+  {
+    "acc_no": 535358,
+    "user_id": null,
+    "name": "el",
+    "balance": 5000,
+    "created_at": "2026-04-09T10:23:21.842885+00:00",
+    "temp_pin": null
+  }
+]
